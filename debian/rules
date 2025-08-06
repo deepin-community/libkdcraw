@@ -1,4 +1,26 @@
 #!/usr/bin/make -f
 
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+
 %:
-	dh $@
+	dh $@ --with kf5,pkgkde_symbolshelper --buildsystem kf5
+
+override_dh_auto_configure-arch:
+	dh_auto_configure -- -DENABLE_DOCS=OFF -DQT_MAJOR_VERSION=5
+	dh_auto_configure --builddirectory=build-qt6 -- -DENABLE_DOCS=OFF -DQT_MAJOR_VERSION=6
+
+override_dh_auto_configure-indep:
+	dh_auto_configure -- -DENABLE_DOCS=ON -DQT_MAJOR_VERSION=5
+	dh_auto_configure --builddirectory=build-qt6 -- -DENABLE_DOCS=ON -DQT_MAJOR_VERSION=6
+
+override_dh_auto_build:
+	dh_auto_build
+	dh_auto_build --builddirectory=build-qt6
+
+override_dh_auto_test:
+	dh_auto_test
+	dh_auto_test --builddirectory=build-qt6
+
+override_dh_auto_install:
+	dh_auto_install
+	dh_auto_install --builddirectory=build-qt6
