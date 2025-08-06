@@ -1,0 +1,4 @@
+usr/include/KDcrawQt6/
+usr/include/KDcrawQt6/libkdcraw_version.h
+usr/lib/*/cmake/KDcrawQt6/
+usr/lib/*/libKDcrawQt6.so
